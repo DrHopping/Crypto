@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intro", "Intro\Intro.csproj", "{0B22DDB7-B75A-4F10-AE64-BD9474811113}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crypto.Library", "Crypto.Library\Crypto.Library.csproj", "{820E42AB-49B1-4A7C-B1C5-DC18687DB93D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{0B22DDB7-B75A-4F10-AE64-BD9474811113}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B22DDB7-B75A-4F10-AE64-BD9474811113}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B22DDB7-B75A-4F10-AE64-BD9474811113}.Release|Any CPU.Build.0 = Release|Any CPU
+		{820E42AB-49B1-4A7C-B1C5-DC18687DB93D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{820E42AB-49B1-4A7C-B1C5-DC18687DB93D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{820E42AB-49B1-4A7C-B1C5-DC18687DB93D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{820E42AB-49B1-4A7C-B1C5-DC18687DB93D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
