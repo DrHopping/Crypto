@@ -1,11 +1,35 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Crypto.Library.Helpers
 {
     public static class Constants
     {
+        public static readonly Regex NonlettersPattern = new Regex("[^A-Z]", RegexOptions.Compiled);
         public const string Letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         public const string ETAOIN = "ETAOINSHRDLCUMWFGYPBVKJXQZ";
+
+        public static byte[] GetEnglishLettersBytes()
+        {
+            return Enumerable.Range(65, 90).Concat(Enumerable.Range(97, 122)).Select(x => (byte)x).ToArray();
+        }
+
+        public static byte[] GetUpperEnglishLettersBytes()
+        {
+            return Enumerable.Range(65, 90).Select(x => (byte)x).ToArray();
+        }
+        
+        public static byte[] GetLowerEnglishLettersBytes()
+        {
+            return Enumerable.Range(97, 122).Select(x => (byte)x).ToArray();
+        }
+        
+        public static byte[] GetAllBytes()
+        {
+            return Enumerable.Range(0, 255).Select(x => (byte)x).ToArray();
+        }
+        
         public static Dictionary<char, double> EnglishLetterFreq = new()
         {
             {'E',12.70},
@@ -35,6 +59,36 @@ namespace Crypto.Library.Helpers
             {'Q', 0.10},
             {'Z', 0.07}
         };
-    
+
+        public static Dictionary<char, double> GetEmptyLettersDictionary() => new()
+        {
+            {'E', 0},
+            {'T', 0},
+            {'A', 0},
+            {'O', 0},
+            {'I', 0},
+            {'N', 0},
+            {'S', 0},
+            {'H', 0},
+            {'R', 0},
+            {'D', 0},
+            {'L', 0},
+            {'C', 0},
+            {'U', 0},
+            {'M', 0},
+            {'W', 0},
+            {'F', 0},
+            {'G', 0},
+            {'Y', 0},
+            {'P', 0},
+            {'B', 0},
+            {'V', 0},
+            {'K', 0},
+            {'J', 0},
+            {'X', 0},
+            {'Q', 0},
+            {'Z', 0}
+        };
+
     }
 }
