@@ -9,7 +9,7 @@ namespace Crypto.Library.Analysis
 {
     public static class English
     {
-        private const double DeviationThreshold = 50;
+        private const double DeviationThreshold = 80;
         private const double LettersPercentThreshold = 70;
         private const double UpperPercentThreshold = 10;
         private static readonly Regex EnglishLetterPattern = new Regex("[a-zA-Z]", RegexOptions.Compiled);
@@ -36,12 +36,21 @@ namespace Crypto.Library.Analysis
                 letters[key] = (letters[key] / message.Length) * 100;
             }
 
-            var deviation = letters.Sum(x => Math.Abs(x.Value - Constants.EnglishLetterFreq[x.Key]));
+            var deviation = GetDeviation(message) * 100;
             var lettersPercent = (lettersCount / message.Length) * 100;
             var upperPercent = ((double)upperCount / message.Length) * 100;
-            return deviation < deviationThreshold 
+            return deviation > deviationThreshold 
                    && lettersPercent > lettersPercentThreshold 
                    && upperPercent < upperPercentThreshold;
+        }
+
+        public static double GetDeviation(string text)
+        {
+            var letters = Constants.GetEmptyLettersDictionary();
+            foreach (var letter in text.Where(IsEnglishLetter).Select(char.ToUpper)) letters[letter]++;
+            var sum = letters.Sum(x => Math.Abs((Constants.EnglishLetterFreq2[x.Key] / 100) * text.Length - x.Value));
+            var norm = 2 * (text.Length - (Constants.EnglishLetterFreq2['Z'] / 100) * text.Length);
+            return (norm - sum) / norm;
         }
     }
 }
