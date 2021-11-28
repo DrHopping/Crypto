@@ -66,8 +66,8 @@ namespace Crypto.Library.Genetic
             var seed1 = new List<char[]>
             {
                 "TEUIJYSPBGAOHFKNDLMZRVQWXC".ToCharArray(), 
-                "YQJBEUNIDPFLATMRSHOKZCWGVX".ToCharArray(),
-                "OQFPASKZHELTJUIXVDYRGCWBMN".ToCharArray(), 
+                "YQJBEUNIDPFLATMRXHOKZCWSVG".ToCharArray(),
+                "OQFPASKZHCLTJUIXVDYRGEWBMN".ToCharArray(), 
                 "LJGONRPKCBIHDTUEFSQYXAZVMW".ToCharArray()
             };
             generation.Add(CalculateFitness(seed1), seed1);
