@@ -14,7 +14,8 @@ namespace Crypto.Library.Analysis
         public NGrams(int n)
         {
             N = n;
-            NGramsFrequency = GetNGramsDictionary(n, File.ReadAllText(@"../../../../Crypto.Library/Files/WarAndPeace.txt"));
+            NGramsFrequency =
+                GetNGramsDictionary(n, File.ReadAllText(@"../../../../Crypto.Library/Files/WarAndPeace.txt"));
         }
         private static Dictionary<string,double> GetNGramsDictionary(int n, string text)
         {
@@ -31,7 +32,10 @@ namespace Crypto.Library.Analysis
         public double GetScore(string text)
         {
             var inputNGrams = GetNGramsDictionary(N, text);
-            return inputNGrams.Sum(x => x.Value * NGramsFrequency[x.Key] > 0 ? Math.Log2(NGramsFrequency[x.Key]) : 0);
+            return inputNGrams.Sum(x => 
+                x.Value * NGramsFrequency[x.Key] > 0 
+                        ? Math.Log2(NGramsFrequency[x.Key]) 
+                        : 0);
         }
     }
 }

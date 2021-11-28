@@ -8,7 +8,7 @@ using Crypto.Library.Helpers;
 
 namespace Crypto.Library.Genetic
 {
-    public class Population
+    public class GeneticAlgorithm
     {
         private static Random _rand = new();
         private WeightedRandom<char[]> _weightedRandom;
@@ -18,13 +18,13 @@ namespace Crypto.Library.Genetic
         private int GenerationSize { get; }
         private SortedList<double, char[]> CurrentGeneration { get; }
         private string Text { get; }
-        private List<NGrams> NGrams { get; }
+        private List<(NGrams nGram, double coef)> NGrams { get; }
 
-        public Population(int generationSize, string text)
+        public GeneticAlgorithm(int generationSize, string text)
         {
             GenerationSize = generationSize;
             Text = text;
-            NGrams = new List<NGrams>{ new(3) };
+            NGrams = new List<(NGrams, double)>{ (new(3), 0.5), (new(2), 0.3), (new(1), 0.2) };
             CurrentGeneration = CreateInitialGeneration();
             _weightedRandom = new WeightedRandom<char[]>(CurrentGeneration);
         }
@@ -49,7 +49,7 @@ namespace Crypto.Library.Genetic
         private double CalculateFitness(char[] key)
         {
             var decrypted = SubstitutionCipher.Decrypt(Text, key);
-            double score = NGrams.Sum(nGram => nGram.GetScore(decrypted));
+            double score = NGrams.Sum(nGram => nGram.nGram.GetScore(decrypted) * nGram.coef);
             return score;
         }
 

@@ -20,17 +20,42 @@ namespace Intro
 
         private const string task3 =
             "EFFPQLEKVTVPCPYFLMVHQLUEWCNVWFYGHYTCETHQEKLPVMSAKSPVPAPVYWMVHQLUSPQLYWLASLFVWPQLMVHQLUPLRPSQLULQESPBLWPCSVRVWFLHLWFLWPUEWFYOTCMQYSLWOYWYETHQEKLPVMSAKSPVPAPVYWHEPPLUWSGYULEMQTLPPLUGUYOLWDTVSQETHQEKLPVPVSMTLEUPQEPCYAMEWWYTYWDLUULTCYWPQLSEOLSVOHTLUYAPVWLYGDALSSVWDPQLNLCKCLRQEASPVILSLEUMQBQVMQCYAHUYKEKTCASLFPYFLMVHQLUPQLHULIVYASHEUEDUEHQBVTTPQLVWFLRYGMYVWMVFLWMLSPVTTBYUNESESADDLSPVYWCYAMEWPUCPYFVIVFLPQLOLSSEDLVWHEUPSKCPQLWAOKLUYGMQEUEMPLUSVWENLCEWFEHHTCGULXALWMCEWETCSVSPYLEMQYGPQLOMEWCYAGVWFEBECPYASLQVDQLUYUFLUGULXALWMCSPEPVSPVMSBVPQPQVSPCHLYGMVHQLUPQLWLRPOEDVMETBYUFBVTTPENLPYPQLWLRPTEKLWZYCKVPTCSTESQPBYMEHVPETCMEHVPETZMEHVPETKTMEHVPETCMEHVPETT";
-        
+
+        private const string task4 =
+            "UMUPLYRXOYRCKTYYPDYZTOUYDZHYJYUNTOMYTOLTKAOHOKZCMKAVZDYBRORPTHQLSERUOERMKZGQJOIDJUDNDZATUVOTTLMQBOWNMERQTDTUFKZCMTAZMEOJJJOXMERKJHACMTAZATIZOEPPJKIJJNOCFEPLFBUNQHHPPKYYKQAZKTOTIKZNXPGQZQAZKTOTIZYNIUISZIAELMKSJOYUYYTHNEIEOESULOXLUEYGBEUGJLHAJTGGOEOSMJHNFJALFBOHOKAGPTIHKNMKTOUUUMUQUDATUEIRBKYUQTWKJKZNLDRZBLTJJJIDJYSULJARKHKUKBISBLTOJRATIOITHYULFBITOVHRZIAXFDRNIORLZEYUUJGEBEYLNMYCZDITKUXSJEJCFEUGJJOTQEZNORPNUDPNQIAYPEDYPDYTJAIGJYUZBLTJJYYNTMSEJYFNKHOTJARNLHHRXDUPZIALZEDUYAOSBBITKKYLXKZNQEYKKZTOKHWCOLKURTXSKKAGZEPLSYHTMKRKJIIQZDTNHDYXMEIRMROGJYUMHMDNZIOTQEKURTXSKKAGZEPLSYHTMKRKJIIQZDTNROAUYLOTIMDQJYQXZDPUMYMYPYRQNYFNUYUJJEBEOMDNIYUOHYYYJHAOQDRKKZRRJEPCFNRKJUHSJOIRQYDZBKZURKDNNEOYBTKYPEJCMKOAJORKTKJLFIOQHYPNBTAVZEUOBTKKBOWSBKOSKZUOZIHQSLIJJMSURHYZJJZUKOAYKNIYKKZNHMITBTRKBOPNUYPNTTPOKKZNKKZNLKZCFNYTKKQNUYGQJKZNXYDNJYYMEZRJJJOXMERKJVOSJIOSIQAGTZYNZIOYSMOHQDTHMEDWJKIULNOTBCALFBJNTOGSJKZNEEYYKUIXLEUNLNHNMYUOMWHHOOQNUYGQJKZLZJZLOLATSEHQKTAYPYRZJYDNQDTHBTKYKYFGJRRUFEWNTHAXFAHHODUPZMXUMKXUFEOTIMUNQIHGPAACFKATIKIZBTOTIKZNKKZNLORUKMLLFBUUQKZNLEOHIEOHEDRHXOTLMIRKLEAHUYXCZYTGUYXCZYTIUYXCZYTCVJOEBKOHE";
+
         static void Main(string[] args)
         {
             Console.WriteLine($"1) {SolveTask1(task1)}");
             Console.WriteLine($"2) {SolveTask2(task2)}");
             Console.WriteLine($"3) {SolveTask3(task3)}");
+            Console.WriteLine($"4) {SolveTask4(task4)}");
         }
+
+        private static string SolveTask4(string task)
+        {
+            var a = GetPossibleKeyLengths(task, 32).FirstOrDefault();
+            var population = new PolyGeneticAlgorithm(200, task, a)
+            {
+                Mutations = 50,
+                MutationProbability = 0.9,
+                MutationSwaps = 2
+            };
+            
+            // for (int i = 0; i < 5; i++)
+            // {
+            //     if (i % 10000 != 0) continue;
+            //     var result = population.RunEpoch();
+            //     Console.WriteLine($"{i}) Score: {result.Key} Text:{PolySubstitutionCipher.Decrypt(task, result.Value)}");
+            // }
+
+            return PolySubstitutionCipher.Decrypt(task, population.Run(5).Value);
+        }
+        
 
         private static string SolveTask3(string task)
         {
-            var population = new Population(50, task)
+            var population = new GeneticAlgorithm(50, task)
             {
                 Mutations = 5,
                 MutationProbability = 0.8,
@@ -60,6 +85,41 @@ namespace Intro
 
             return Encoding.ASCII.GetString(MultipleByteXor(taskBytes, key));
         }
+
+        // private static int GetPossibleKeyLengthForTask4(string message)
+        // {
+        //     int max = 64;
+        //     var ics = new double[max];
+        //     for (var i = 1; i <= max; i++)
+        //     {
+        //         var offsetText = GetOffsetText(message, i);
+        //         var ic = Utils.CalculateIC(offsetText);
+        //         ics[i - 1] = ic;
+        //         Console.WriteLine($"{i},{ic}");
+        //     }
+        //     for (var i = 0; i < ics.Length; i++)
+        //     {
+        //         var ic = ics[i];
+        //         var next = i > 0 ? ics[i - 1] : ics[i + 1];
+        //         var diff = ic - next;
+        //         if (diff > 0.2)
+        //         {
+        //             return i + 1;
+        //         }
+        //     }
+        //     return -1;
+        //     
+        // }
+        //
+        // private static string GetOffsetText(string text, int offset)
+        // {
+        //     var builder = new StringBuilder();
+        //     for (var i = 0; i < text.Length; i += offset)
+        //     {
+        //         builder.Append(text[i]);
+        //     }
+        //     return builder.ToString();
+        // }
         
         private static List<int> GetPossibleKeyLengths(string message, int maxLength)
         {
@@ -72,7 +132,8 @@ namespace Intro
             }
             var averageIndex = paddingIndexList.Average(x => x.Index);
             var usefulLengthsList = paddingIndexList.Where(x => x.Index > averageIndex)
-                 .OrderBy(x => x.Length).ToList();
+                .Where(x => x.Length != 1)
+                .OrderBy(x => x.Length).ToList();
             return usefulLengthsList.All(x => x.Length % usefulLengthsList.First().Length == 0) 
                 ? new List<int> { usefulLengthsList.First().Length } 
                 : usefulLengthsList.Select(x => x.Length).ToList();
