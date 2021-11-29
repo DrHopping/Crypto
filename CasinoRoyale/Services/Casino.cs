@@ -33,6 +33,7 @@ namespace CasinoRoyale.Services
 
         public async Task<Result> Play(GameMode gameMode, long bet, long betNumber)
         {
+            if (gameMode == GameMode.Lcg) betNumber = (int)betNumber;
             var url = $"{Url}/play{gameMode}?id={_accountId}&bet={bet}&number={betNumber}";
             var result = await GetDeserializedAsync<Result>(url);
             result.IsVictory = result.RealNumber == betNumber;
@@ -48,7 +49,7 @@ namespace CasinoRoyale.Services
         private async Task<T> GetDeserializedAsync<T>(string url)
         {
             var response = await _httpClient.GetAsync(url);
-            if (!response.IsSuccessStatusCode) throw new InvalidOperationException("Request failed");
+            if (!response.IsSuccessStatusCode) throw new InvalidOperationException($"Request failed: {await response.Content.ReadAsStringAsync()}");
             var message = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<T>(message);
         }

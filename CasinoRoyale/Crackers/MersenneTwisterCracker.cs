@@ -2,7 +2,7 @@
 
 namespace CasinoRoyale.Crackers
 {
-    public class MersenneTwisterCracker
+    public class MersenneTwisterCracker : ICracker
     {
         private readonly ulong _seed;
         private readonly MersenneTwister _generator;
@@ -14,9 +14,9 @@ namespace CasinoRoyale.Crackers
             _generator.init_genrand(seed);
         }
 
-        public ulong Next()
+        public long Next()
         {
-            return _generator.genrand_uint32();
+            return (long)_generator.genrand_uint32();
         }
     }
 }

@@ -52,20 +52,10 @@ namespace CasinoRoyale.RandomGenerators
             init_by_array(new ulong[] { 0x123, 0x234, 0x345, 0x456 });
         } // set default seeds
 
-        public void SetState(ulong[] mt)
+        public MersenneTwister(ulong[] state)
         {
-            mti = N;
-            this.mt = mt;
-        }
-
-        public MersenneTwister(ulong s)
-        {
-            init_genrand(s);
-        }
-
-        public MersenneTwister(ulong[] init_key)
-        {
-            init_by_array(init_key);
+            mti = mt.Length;
+            mt = state;
         }
 
         // initializes mt[N] with a seed
@@ -160,24 +150,6 @@ namespace CasinoRoyale.RandomGenerators
             y ^= (y << 15) & 0xefc60000UL;
             y ^= (y >> 18);
             return y;
-        }
-
-        // generates a random floating point number on [0,1]
-        public double genrand_real1()
-        {
-            return genrand_uint32() * (1.0 / 4294967295.0); // divided by 2^32-1
-        }
-
-        // generates a random floating point number on [0,1)
-        public double genrand_real2()
-        {
-            return genrand_uint32() * (1.0 / 4294967296.0); // divided by 2^32
-        }
-
-        // generates a random integer number from 0 to N-1
-        public int genrand_N(int iN)
-        {
-            return (int)(genrand_uint32() * (iN / 4294967296.0));
         }
     }
 }

@@ -8,11 +8,11 @@ using CasinoRoyale.Services;
 
 namespace CasinoRoyale.Crackers
 {
-    public class LcgCracker
+    public class LcgCracker : ICracker
     {
         private readonly Lcg _generator;
 
-        public LcgCracker(List<int> numbers)
+        public LcgCracker(List<long> numbers)
         {
             if (numbers.Count != 3) throw new ArgumentException("You must pass 3 random numbers");
             var (a, b) = Crack(numbers);
@@ -21,7 +21,7 @@ namespace CasinoRoyale.Crackers
 
         public long Next() => _generator.Next();
         
-        private (long a, long b) Crack(List<int> numbers)
+        private (long a, long b) Crack(List<long> numbers)
         {
             var a = (numbers[1] - numbers[2]) * ModInverse(numbers[1] - numbers[0], Lcg.M) * Math.Sign(numbers[0] - numbers[1]) % Lcg.M;
             var b = (numbers[1] - numbers[0] * a) % Lcg.M;
