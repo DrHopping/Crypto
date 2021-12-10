@@ -21,7 +21,7 @@ However, the default "interactive" settings do roughly match:
 Also before the Argon hashing added SHA3 to protect from very long passwords ddos attack.
 After registering new user with this settings record in database looks like this:
 
-![](resources\db-record.png)
+![](resources/db-record.png)
 
 Where `62/Xqn11QG6NKFfsY6ffoA` is salt and `l0eKdJq/9YkrpFrgF3sAkvhnLvawzih7nHSaK06oUJY` is digest.
 
