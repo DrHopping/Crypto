@@ -1,4 +1,5 @@
 ##Lab 5 - Password storage. Hashing.
+
 This lab was made based on my project which is blog website. 
 You can find source code [here](https://github.com/DrHopping/BlogProject/tree/Crypto) in `Crypto` branch.
 Backend for this project was made with ASP.NET Core Web API and Entity Framework Core.
