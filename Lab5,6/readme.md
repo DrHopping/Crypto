@@ -1,4 +1,5 @@
-##Lab 5 - Password storage. Hashing.
+Lab 5 - Password storage. Hashing.
+--
 
 This lab was made based on my project which is blog website. 
 You can find source code [here](https://github.com/DrHopping/BlogProject/tree/Crypto) in `Crypto` branch.
@@ -36,3 +37,21 @@ To secure users from brute-force and dictionary attacks following measures were 
 that throws error when password is in list of most common passwords.
 3. Added rate-limit for authentication and user creation endpoints. Only 10 requests per 10min to Auth and only 5 per 10min to create;
 
+
+Lab 6 - Sensitive information storage
+--
+
+In this part I created secret storage for phone number of users. Phone numbers stored in database encrypted with ```AES-256GCM```.
+To simplify the task single key user for encrypting information of all users. Also key is stored in appsettings file of the project, 
+but I am aware that this is not a secure way of storing secret keys and key vaults such as Amazon KMS or Azure Key Vault must be used
+in such scenario.
+
+Nonce and tag generated with ```RandomNumberGenerator.Fill``` method. After encrypting, data, tag and nonce converted to hex and stored 
+in the single field in database (data+nonce+tag) like this:
+
+![](resources/db-record2.png)
+
+```AES-256-GCM``` was chosen because provides both authenticated encryption (confidentiality and authentication) and the ability to check the integrity and authentication of additional authenticated data (AAD) that is sent in the clear.
+And 256bit key makes it impossible to brute-force it.
+
+The main possible ways to attack the systems is getting secret key as it is not stored securely.
