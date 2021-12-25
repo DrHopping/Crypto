@@ -55,3 +55,19 @@ in the single field in database (data+nonce+tag) like this:
 And 256bit key makes it impossible to brute-force it.
 
 The main possible ways to attack the systems is getting secret key as it is not stored securely.
+
+Lab 7 - TLS configuration
+--
+
+For this task I chose TLS1.3 because its the newest and most secured version of TLS at this time.
+This version of TLS support 5 cipher suites.
+- TLS_AES_128_GCM_SHA256
+- TLS_AES_256_GCM_SHA384
+- TLS_CHACHA20_POLY1305_SHA256
+- TLS_AES_128_CCM_SHA256
+- TLS_AES_128_CCM_8_SHA256
+
+TLS1.3 experimental feature was enabled in windows setting because without that 
+Client and Server will not have common cipher suites.
+For this task certificate and private key is stored in project files but its not a secure
+way and they must be stored in some secure place like AWS Secrets Manager or Hashicorp Vault.
